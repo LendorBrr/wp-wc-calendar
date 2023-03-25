@@ -47,7 +47,53 @@ class WC_Date_Time_Picker {
         add_action( 'admin_menu', array( $this, 'register_taken_dates_times_page' ) );
         add_filter( 'woocommerce_get_sections_products', array( $this, 'add_settings_section' ) );
         add_filter( 'woocommerce_get_settings_products', array( $this, 'get_settings' ), 10, 2 );
+        add_filter( 'woocommerce_get_sections_products', array( $this, 'add_product_settings_section' ) );
+        add_filter( 'woocommerce_get_settings_products', array( $this, 'add_product_settings_fields' ), 10, 2 );
+
     }
+
+    // Create a new WooCommerce section under Products tab
+public function add_product_settings_section( $sections ) {
+  $sections['wc_datetimepicker_products'] = __( 'Date Time Picker Products', 'woocommerce' );
+  return $sections;
+}
+
+// Add a setting field for selecting specific products
+public function add_product_settings_fields( $settings, $current_section ) {
+  if ( 'wc_datetimepicker_products' === $current_section ) {
+    $settings = array(
+      array(
+        'title' => __( 'Select Products for Date Time Picker', 'woocommerce' ),
+        'desc'  => __( 'Choose the products that should display the calendar.', 'woocommerce' ),
+        'id'    => 'wc_datetimepicker_products',
+        'type'  => 'multiselect',
+        'options' => $this->get_all_products(),
+        'css'   => 'width: 50%;',
+      ),
+      array(
+        'type' => 'sectionend',
+        'id' => 'wc_datetimepicker_products',
+      ),
+    );
+  }
+  return $settings;
+}
+
+// Get all products for the multiselect options
+public function get_all_products() {
+  $args = array(
+    'post_type' => 'product',
+    'posts_per_page' => -1,
+  );
+  $products = get_posts( $args );
+  $options = array();
+  foreach ( $products as $product ) {
+    $options[$product->ID] = $product->post_title;
+  }
+  return $options;
+}
+
+
     public function register_taken_dates_times_page() {
     add_submenu_page( 'woocommerce', 'Taken Dates and Times', 'Taken Dates & Times', 'manage_options', 'wc-taken-dates-times', array( $this, 'taken_dates_times_page' ) );
 }
@@ -72,7 +118,15 @@ public function taken_dates_times_page() {
     wp_enqueue_script('jquery-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.3.2/jquery.timepicker.min.js', array( 'jquery' ), '1.3.3.2', true );
     wp_enqueue_style( 'jquery-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.3/jquery.timepicker.min.css', array(), '1.3.3' );
     wp_enqueue_script( 'wc-date-time-picker-script', plugin_dir_url( __FILE__ ) . 'assets/js/wc-date-time-picker.js', array( 'jquery', 'jquery-ui-datepicker', 'jquery-timepicker' ), '1.0', true );
+    wp_register_script( 'wc-date-time-picker', plugins_url( 'wc-date-time-picker.js', __FILE__ ), array( 'jquery' ), '1.0', true )
+$allowed_products = get_option( 'wc_datetimepicker_products', array() );
+  wp_localize_script( 'wc-date-time-picker', 'wc_datetime_picker_params', array(
+    'ajax_url' => admin_url( 'admin-ajax.php' ),
+    'allowed_products' => $allowed_products,
+    'current_product_id' => get_the_ID(),
+  ));
 
+  wp_enqueue_script( 'wc-date-time-picker' );
         $style = get_option( 'wc_date_time_picker_style', 'classic' );
         wp_enqueue_style( 'wc-date-time-picker-style', plugin_dir_url( __FILE__ ) . 'assets/css/' . $style . '.css', array(), '1.0' );
         wp_enqueue_script( 'wc-date-time-picker-script', plugin_dir_url( __FILE__ ) . 'assets/js/wc-date-time-picker.js', array( 'jquery' ), '1.0', true );
