@@ -38,6 +38,8 @@ class WC_Date_Time_Picker {
      */
     public function __construct() {
         add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_date_time_picker' ) );
+        add_filter( 'woocommerce_get_sections_products', array( $this, 'add_product_settings_section' ) );
+        add_filter( 'woocommerce_get_settings_products', array( $this, 'add_product_settings_fields' ), 10, 2 );
         add_action( 'woocommerce_add_to_cart_validation', array( $this, 'validate_date_time' ), 10, 3 );
         add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_date_time_to_cart_item_data' ), 10, 3 );
         add_filter( 'woocommerce_get_item_data', array( $this, 'display_date_time_in_cart' ), 10, 2 );
@@ -47,9 +49,6 @@ class WC_Date_Time_Picker {
         add_action( 'admin_menu', array( $this, 'register_taken_dates_times_page' ) );
         add_filter( 'woocommerce_get_sections_products', array( $this, 'add_settings_section' ) );
         add_filter( 'woocommerce_get_settings_products', array( $this, 'get_settings' ), 10, 2 );
-        add_filter( 'woocommerce_get_sections_products', array( $this, 'add_product_settings_section' ) );
-        add_filter( 'woocommerce_get_settings_products', array( $this, 'add_product_settings_fields' ), 10, 2 );
-
     }
 
     // Create a new WooCommerce section under Products tab
