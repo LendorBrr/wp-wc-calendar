@@ -118,7 +118,12 @@ public function taken_dates_times_page() {
     wp_enqueue_script('jquery-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.3.2/jquery.timepicker.min.js', array( 'jquery' ), '1.3.3.2', true );
     wp_enqueue_style( 'jquery-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.3/jquery.timepicker.min.css', array(), '1.3.3' );
     wp_enqueue_script( 'wc-date-time-picker-script', plugin_dir_url( __FILE__ ) . 'assets/js/wc-date-time-picker.js', array( 'jquery', 'jquery-ui-datepicker', 'jquery-timepicker' ), '1.0', true );
-wp_register_script( 'wc-date-time-picker', plugins_url( 'wc-date-time-picker.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+    
+if ( ! is_product() ) {
+    return; // Add this line to only enqueue the script for single product pages
+  }
+
+  wp_register_script( 'wc-date-time-picker', plugins_url( 'wc-date-time-picker.js', __FILE__ ), array( 'jquery' ), '1.0', true );
 
   $allowed_products = get_option( 'wc_datetimepicker_products', array() );
   $allowed_products = array_map( 'intval', $allowed_products );
@@ -126,7 +131,7 @@ wp_register_script( 'wc-date-time-picker', plugins_url( 'wc-date-time-picker.js'
   wp_localize_script( 'wc-date-time-picker', 'wc_datetime_picker_params', array(
     'ajax_url' => admin_url( 'admin-ajax.php' ),
     'allowed_products' => $allowed_products,
-    'current_product_id' => $post->ID, // Use $post->ID instead of get_the_ID()
+    'current_product_id' => $post->ID,
   ));
 
   wp_enqueue_script( 'wc-date-time-picker' );
