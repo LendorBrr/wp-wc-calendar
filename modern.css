@@ -1,0 +1,80 @@
+  text-align: center;
+  font-weight: bold;
+  padding: 0.25em;
+}
+
+.ui-datepicker td {
+  text-align: center;
+  padding: 0.25em;
+}
+
+.ui-datepicker .ui-state-default {
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  color: #222;
+  padding: 0.25em;
+  border-radius: 4px;
+}
+
+.ui-datepicker .ui-state-active {
+  border: 1px solid #007cba;
+  background-color: #007cba;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.ui-datepicker .ui-state-highlight {
+  border: 1px solid #ccc;
+  background-color: #ffe;
+  color: #363636;
+  border-radius: 4px;
+}
+
+.ui-datepicker .ui-state-disabled {
+  opacity: 0.5;
+  filter: grayscale(50%);
+  cursor: not-allowed;
+}
+
+/* jQuery Timepicker */
+.ui-timepicker-wrapper {
+  z-index: 1000;
+  display: none;
+  box-sizing: border-box;
+  background-color: #fff;
+  overflow: hidden;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ui-timepicker-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-timepicker-item {
+  cursor: pointer;
+    padding: 3px 8px;
+  font-size: 0.9em;
+  border-radius: 2px;
+}
+
+.ui-timepicker-item:hover {
+  background-color: #f0f0f0;
+}
+
+.ui-timepicker-item.selected {
+  background-color: #007cba;
+  color: #fff;
+}
+
+.ui-timepicker-item.disabled {
+  opacity: 0.5;
+  filter: grayscale(50%);
+  cursor: not-allowed;
+}
+ 

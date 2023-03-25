@@ -1,0 +1,99 @@
+/* Classic style for the WooCommerce Date Time Picker plugin */
+
+.wc-date-time-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.wc-date-time-picker p {
+  margin: 0;
+}
+
+.wc-date-time-picker label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.wc-date-time-picker input {
+  width: 100%;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+/* jQuery UI Datepicker */
+.ui-datepicker {
+  font-size: 0.9em;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 0.5em;
+}
+
+.ui-datepicker th {
+  text-align: center;
+  font-weight: bold;
+  padding: 0.25em;
+}
+
+.ui-datepicker td {
+  text-align: center;
+  padding: 0.25em;
+}
+
+.ui-datepicker .ui-state-default {
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  color
+  color: #222;
+  padding: 0.25em;
+}
+
+.ui-datepicker .ui-state-active {
+  border: 1px solid #007cba;
+  background-color: #007cba;
+  color: #fff;
+  font-weight: bold;
+}
+
+.ui-datepicker .ui-state-highlight {
+  border: 1px solid #ccc;
+  background-color: #ffe;
+  color: #363636;
+}
+
+.ui-datepicker .ui-state-disabled {
+  opacity: 0.5;
+  filter: grayscale(50%);
+  cursor: not-allowed;
+}
+
+/* jQuery Timepicker */
+.ui-timepicker-wrapper {
+  z-index: 1000;
+  display: none;
+  box-sizing: border-box;
+  background-color: #fff;
+  overflow: hidden;
+  padding: 4px;
+  border: 1px solid #ccc;
+}
+
+.ui-timepicker-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-timepicker-item {
+  cursor: pointer;
+  padding: 3px 8px;
+  font-size: 0.9em;
+}
+
+.ui-timepicker-item:hover {
+  background-color: #eee;
+}
