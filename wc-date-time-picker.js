@@ -4,10 +4,10 @@ jQuery(document).ready(function($) {
   let minTime = parseInt($("#wc-time-picker").data("min-time"), 10);
   var availableDates = wcDateTimePickerData.available_dates;
   var availableTimeSlots = wcDateTimePickerData.available_time_slots;
-    // Check if the calendar should be displayed for the current product
-  var allowed_products = wc_datetime_picker_params.allowed_products;
-  var current_product_id = wc_datetime_picker_params.current_product_id;
-    if (allowed_products.includes(current_product_id)) {
+  var allowed_products = JSON.parse(wc_datetime_picker_params.allowed_products); // Parse the JSON string
+  var current_product_id = parseInt(wc_datetime_picker_params.current_product_id, 10);
+
+  if (allowed_products.includes(current_product_id)) {
 
   function isAvailableDate(date) {
     var dateString = jQuery.datepicker.formatDate('yy-mm-dd', date);
