@@ -119,22 +119,29 @@ public function taken_dates_times_page() {
     wp_enqueue_style( 'jquery-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.3/jquery.timepicker.min.css', array(), '1.3.3' );
     wp_enqueue_script( 'wc-date-time-picker-script', plugin_dir_url( __FILE__ ) . 'assets/js/wc-date-time-picker.js', array( 'jquery', 'jquery-ui-datepicker', 'jquery-timepicker' ), '1.0', true );
     
-if ( ! is_product() ) {
-    return; // Add this line to only enqueue the script for single product pages
-  }
+ if (!is_product()) {
+        return;
+    }
 
-  wp_register_script( 'wc-date-time-picker', plugins_url( 'wc-date-time-picker.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+    $allowed_products = get_option('wc_datetimepicker_products', array());
+    $allowed_products = array_map('intval', $allowed_products);
 
-  $allowed_products = get_option( 'wc_datetimepicker_products', array() );
-  $allowed_products = array_map( 'intval', $allowed_products );
+    if (!in_array($post->ID, $allowed_products)) {
+        return; // Add this line to conditionally add the action based on the product ID
+    }
 
-  wp_localize_script( 'wc-date-time-picker', 'wc_datetime_picker_params', array(
-    'ajax_url' => admin_url( 'admin-ajax.php' ),
-    'allowed_products' => $allowed_products,
-    'current_product_id' => $post->ID,
-  ));
+    wp_register_script('wc-date-time-picker', plugins_url('wc-date-time-picker.js', __FILE__), array('jquery'), '1.0', true);
 
-  wp_enqueue_script( 'wc-date-time-picker' );
+    wp_localize_script('wc-date-time-picker', 'wc_datetime_picker_params', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'allowed_products' => $allowed_products,
+        'current_product_id' => $post->ID,
+    ));
+
+    wp_enqueue_script('wc-date-time-picker');
+    
+    // Add the action for the selected products
+    add_action('woocommerce_before_add_to_cart_button', array($this, 'wc_before_add_to_cart_button'));
         $style = get_option( 'wc_date_time_picker_style', 'classic' );
         wp_enqueue_style( 'wc-date-time-picker-style', plugin_dir_url( __FILE__ ) . 'assets/css/' . $style . '.css', array(), '1.0' );
         wp_enqueue_script( 'wc-date-time-picker-script', plugin_dir_url( __FILE__ ) . 'assets/js/wc-date-time-picker.js', array( 'jquery' ), '1.0', true );
