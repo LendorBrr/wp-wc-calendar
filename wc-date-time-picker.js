@@ -1,4 +1,10 @@
 jQuery(document).ready(function($) {
+      let minDate = parseInt($("#wc-date-picker").data("min-date"), 10);
+  let minTime = parseInt($("#wc-time-picker").data("min-time"), 10);
+  var availableDates = wcDateTimePickerData.available_dates;
+  var availableTimeSlots = wcDateTimePickerData.available_time_slots;
+  var allowed_products = JSON.parse(wc_datetime_picker_params.allowed_products); // Parse the JSON string
+  var current_product_id = parseInt(wc_datetime_picker_params.current_product_id, 10);
   if ($(".wc-date-time-picker").length > 0) {
     var product_id = wc_date_time_picker_vars.product_id;
     var allowed_products = wc_date_time_picker_vars.allowed_products;
