@@ -44,12 +44,39 @@ class WC_Date_Time_Picker {
         add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_date_time_to_cart_item_data' ), 10, 3 );
         add_filter( 'woocommerce_get_item_data', array( $this, 'display_date_time_in_cart' ), 10, 2 );
         add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'add_date_time_to_order_items' ), 10, 4 );
+add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+    add_action('wp_ajax_wc_available_hours', array($this, 'wc_available_hours'));
+    add_action('wp_ajax_nopriv_wc_available_hours', array($this, 'wc_available_hours'));
+    add_action('woocommerce_checkout_update_order_meta', array($this, 'woocommerce_checkout_update_order_meta'));
+    add_action('woocommerce_admin_order_data_after_order_details', array($this, 'woocommerce_admin_order_data_after_order_details'));
+    add_action('woocommerce_order_details_after_order_table', array($this, 'woocommerce_order_details_after_order_table'));
+    add_filter('woocommerce_general_settings', array($this, 'woocommerce_general_settings'));
+
+
+    // Conditionally add the 'woocommerce_add_to_cart_validation' filter
+    add_action('wp', array($this, 'conditionally_add_validation_filter'));
+
 
         // Admin settings
         add_action( 'admin_menu', array( $this, 'register_taken_dates_times_page' ) );
         add_filter( 'woocommerce_get_sections_products', array( $this, 'add_settings_section' ) );
         add_filter( 'woocommerce_get_settings_products', array( $this, 'get_settings' ), 10, 2 );
     }
+    public function conditionally_add_validation_filter() {
+    global $post;
+
+    if (!is_product()) {
+        return;
+    }
+
+    $allowed_products = get_option('wc_datetimepicker_products', array());
+    $allowed_products = array_map('intval', $allowed_products);
+
+    if (in_array($post->ID, $allowed_products)) {
+        add_filter('woocommerce_add_to_cart_validation', array($this, 'woocommerce_add_to_cart_validation'), 10, 3);
+    }
+}
+
 
     // Create a new WooCommerce section under Products tab
 public function add_product_settings_section( $sections ) {
