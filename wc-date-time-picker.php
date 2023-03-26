@@ -60,12 +60,13 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_filter( 'woocommerce_get_settings_products', array( $this, 'get_settings' ), 10, 2 );
     }
 
-    public function enqueue_scripts() {
-    wp_enqueue_style('jquery-ui');
-    wp_register_script('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.js', array('jquery', 'jquery-ui-datepicker'));
-    wp_enqueue_script('wc-date-time-picker');
+public function enqueue_scripts() {
+    wp_register_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css');
+    wp_enqueue_style('wc-date-time-picker', plugins_url('wc-date-time-picker.css', __FILE__));
+    wp_register_script('wc-date-time-picker', plugins_url('wc-date-time-picker.js', __FILE__), array('jquery', 'jquery-ui-datepicker'), false, true);
 }
-    public function conditionally_add_validation_filter() {
+
+public function conditionally_add_validation_filter() {
     global $post;
     if (is_product()) {
         $current_product_id = get_the_ID();
@@ -75,10 +76,9 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         $allowed_products = !empty($allowed_products) ? $allowed_products : array();
 
         if ($product && in_array($current_product_id, $allowed_products)) {
-            wp_enqueue_style('wc-date-time-picker-modern', plugins_url('modern.css', __FILE__));
-             wp_enqueue_script('jquery-ui-datepicker');
-                wp_register_style('jquery-ui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css');
-            wp_enqueue_script('wc-date-time-picker', plugins_url('wc-date-time-picker.js', __FILE__), array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'));
+            wp_enqueue_style('jquery-ui');
+            wp_enqueue_script('jquery-ui-datepicker');
+            wp_enqueue_script('wc-date-time-picker');
             wp_localize_script('wc-date-time-picker', 'wc_date_time_picker_vars', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'product_id' => $current_product_id,
@@ -87,6 +87,7 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         }
     }
 }
+
 
 
     // Create a new WooCommerce section under Products tab
