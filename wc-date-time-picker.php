@@ -223,14 +223,25 @@ wp_localize_script( 'wc-date-time-picker-script', 'wcDateTimePickerData', array(
 }
 
     public function validate_date_time( $passed, $product_id, $quantity ) {
-        if ( empty( $_POST['wc_date'] ) || empty( $_POST['wc_time'] ) ) {
-            $passed = false;
-            wc_add_notice( __( 'Please choose a date and time before adding
-            to the cart.', 'wc-date-time-picker' ), 'error' );
+    if ( ! isset( $_POST['wc_book_datetime'] ) || empty( $_POST['wc_book_datetime'] ) ) {
+        $allowed_products = get_option('wc_datetimepicker_products');
+        $allowed_products = !empty($allowed_products) ? $allowed_products : array();
+
+        if (isset($_POST['add-to-cart'])) {
+            $current_product_id = (int)$_POST['add-to-cart'];
+        } else {
+            global $product;
+            $current_product_id = $product->get_id();
         }
 
-        return $passed;
+        if (in_array($current_product_id, $allowed_products)) {
+            wc_add_notice(__('Please select a date and time before adding to the cart.', 'wc_book_datetime'), 'error');
+            return false;
+        }
     }
+
+    return true;
+}
 
     public function add_date_time_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
         if ( isset( $_POST['wc_date'] ) && isset( $_POST['wc_time'] ) ) {
