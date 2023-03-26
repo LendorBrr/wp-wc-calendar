@@ -44,8 +44,6 @@ class WC_Date_Time_Picker {
         add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_date_time_to_cart_item_data' ), 10, 3 );
         add_filter( 'woocommerce_get_item_data', array( $this, 'display_date_time_in_cart' ), 10, 2 );
         add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'add_date_time_to_order_items' ), 10, 4 );
-        add_action('plugins_loaded', array($this, 'plugins_loaded'));
-    add_action('init', array($this, 'init'));
     add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
     add_action('wp_ajax_wc_available_hours', array($this, 'wc_available_hours'));
     add_action('wp_ajax_nopriv_wc_available_hours', array($this, 'wc_available_hours'));
@@ -53,7 +51,8 @@ class WC_Date_Time_Picker {
     add_action('woocommerce_admin_order_data_after_order_details', array($this, 'woocommerce_admin_order_data_after_order_details'));
     add_action('woocommerce_order_details_after_order_table', array($this, 'woocommerce_order_details_after_order_table'));
     add_filter('woocommerce_general_settings', array($this, 'woocommerce_general_settings'));
-// Conditionally add the 'woocommerce_add_to_cart_validation' filter
+
+    // Conditionally add the 'woocommerce_add_to_cart_validation' filter
     add_action('wp', array($this, 'conditionally_add_validation_filter'));
 
 
