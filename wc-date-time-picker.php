@@ -62,6 +62,14 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_filter( 'woocommerce_get_sections_products', array( $this, 'add_settings_section' ) );
         add_filter( 'woocommerce_get_settings_products', array( $this, 'get_settings' ), 10, 2 );
     }
+
+    public function enqueue_scripts() {
+    wp_enqueue_script('jquery-ui-datepicker');
+    wp_register_style('jquery-ui', '//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css');
+    wp_enqueue_style('jquery-ui');
+    wp_register_script('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.js', array('jquery', 'jquery-ui-datepicker'));
+    wp_enqueue_script('wc-date-time-picker');
+}
     public function conditionally_add_validation_filter() {
     global $post;
 
