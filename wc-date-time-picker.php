@@ -50,9 +50,6 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
     add_action('woocommerce_checkout_update_order_meta', array($this, 'woocommerce_checkout_update_order_meta'));
     add_action('woocommerce_admin_order_data_after_order_details', array($this, 'woocommerce_admin_order_data_after_order_details'));
     add_action('woocommerce_order_details_after_order_table', array($this, 'woocommerce_order_details_after_order_table'));
-    add_filter('woocommerce_general_settings', array($this, 'woocommerce_general_settings'));
-
-
     // Conditionally add the 'woocommerce_add_to_cart_validation' filter
     add_action('wp', array($this, 'conditionally_add_validation_filter'));
 
