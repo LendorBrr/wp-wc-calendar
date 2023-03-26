@@ -68,14 +68,15 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
     wp_enqueue_script('wc-date-time-picker');
 }
     public function conditionally_add_validation_filter() {
+    global $post;
     if (is_product()) {
-        global $product;
+        $current_product_id = get_the_ID();
+        $product = wc_get_product($current_product_id);
 
         $allowed_products = get_option('wc_datetimepicker_products');
         $allowed_products = !empty($allowed_products) ? $allowed_products : array();
-        $current_product_id = $product->get_id();
 
-        if (in_array($current_product_id, $allowed_products)) {
+        if ($product && in_array($current_product_id, $allowed_products)) {
             wp_enqueue_style('wc-date-time-picker-modern', plugins_url('modern.css', __FILE__));
             wp_enqueue_script('wc-date-time-picker', plugins_url('wc-date-time-picker.js', __FILE__), array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'));
             wp_localize_script('wc-date-time-picker', 'wc_date_time_picker_vars', array(
