@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WooCommerce Date Time Picker
- * Plugin URI: https://github.com/your_github_username/wc-date-time-picker
+ * Plugin URI: https://www.elzeego.com
  * Description: This plugin adds a date and time picker to WooCommerce products.
  * Version: 1.0
  * Author: Elzee Go
@@ -118,7 +118,7 @@ public function taken_dates_times_page() {
     wp_enqueue_script('jquery-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.3.2/jquery.timepicker.min.js', array( 'jquery' ), '1.3.3.2', true );
     wp_enqueue_style( 'jquery-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.3/jquery.timepicker.min.css', array(), '1.3.3' );
     wp_enqueue_script( 'wc-date-time-picker-script', plugin_dir_url( __FILE__ ) . 'assets/js/wc-date-time-picker.js', array( 'jquery', 'jquery-ui-datepicker', 'jquery-timepicker' ), '1.0', true );
-    
+
  if (!is_product()) {
         return;
     }
@@ -171,11 +171,11 @@ wp_localize_script( 'wc-date-time-picker-script', 'wcDateTimePickerData', array(
         <div class="wc-date-time-picker">
  <!-- Date picker and time picker input elements -->
             <p>
-                <label for="wc-date-picker"><?php _e( 'Pasirinkite datą', 'wc-date-time-picker' ); ?></label>
+                <label for="wc-date-picker"><?php _e( 'Choose date', 'wc-date-time-picker' ); ?></label>
                 <input type="text" id="wc-date-picker" name="wc_date" data-min-date="<?php echo esc_attr( $min_date ); ?>">
             </p>
             <p>
-                <label for="wc-time-picker"><?php _e( 'Pasirinkite', 'wc-date-time-picker' ); ?></label>
+                <label for="wc-time-picker"><?php _e( 'Choose time', 'wc-date-time-picker' ); ?></label>
                 <input type="text" id="wc-time-picker" name="wc_time" data-min-time="<?php echo esc_attr( $min_time ); ?>">
             </p>
         </div>
