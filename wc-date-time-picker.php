@@ -68,17 +68,22 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
     wp_enqueue_script('wc-date-time-picker');
 }
     public function conditionally_add_validation_filter() {
-    global $post;
+    if (is_product()) {
+        global $product;
 
-    if (!is_product()) {
-        return;
-    }
+        $allowed_products = get_option('wc_datetimepicker_products');
+        $allowed_products = !empty($allowed_products) ? $allowed_products : array();
+        $current_product_id = $product->get_id();
 
-    $allowed_products = get_option('wc_datetimepicker_products', array());
-    $allowed_products = array_map('intval', $allowed_products);
-
-    if (in_array($post->ID, $allowed_products)) {
-        add_filter('woocommerce_add_to_cart_validation', array($this, 'woocommerce_add_to_cart_validation'), 10, 3);
+        if (in_array($current_product_id, $allowed_products)) {
+            wp_enqueue_style('wc-date-time-picker-modern', plugins_url('modern.css', __FILE__));
+            wp_enqueue_script('wc-date-time-picker', plugins_url('wc-date-time-picker.js', __FILE__), array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'));
+            wp_localize_script('wc-date-time-picker', 'wc_date_time_picker_vars', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'product_id' => $current_product_id,
+                'allowed_products' => $allowed_products,
+            ));
+        }
     }
 }
 
