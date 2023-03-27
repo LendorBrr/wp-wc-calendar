@@ -8,6 +8,30 @@
   padding: 0.25em;
 }
 
+.wc-date-time-picker .ui-slider .ui-slider-handle {
+  position: absolute;
+  z-index: 2;
+  width: 1.2em;
+  height: 1.2em;
+  cursor: pointer;
+  background: #5A5A5A;
+  border: 1px solid #000;
+  border-radius: 50%;
+  top: -0.6em;
+}
+
+.wc-date-time-picker .ui-slider .ui-slider-range {
+  position: absolute;
+  z-index: 1;
+  font-size: .7em;
+  display: block;
+  border: 0;
+  background-position: 0 0;
+  background: #C5C5C5;
+  height: 4px;
+  top: 0.5em;
+}
+
 .ui-datepicker .ui-state-default {
   border: 1px solid #ccc;
   background-color: #f7f7f7;
