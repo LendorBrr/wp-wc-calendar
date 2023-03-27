@@ -60,23 +60,23 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_filter( 'woocommerce_get_settings_products', array( $this, 'get_settings' ), 10, 2 );
     }
 
-public function enqueue_scripts() {
-    if (is_product()) {
-        wp_enqueue_script('jquery-ui-datepicker');
-        wp_enqueue_script('jquery-ui-slider');
-        wp_enqueue_script('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.js', array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'));
-        wp_localize_script('wc-date-time-picker', 'wcDateTimePickerData', array(
-            'available_dates' => get_option('wc_appointment_date_picker_dates'),
-            'available_time_slots' => get_option('wc_appointment_time_slots'),
-            'allowed_products' => json_encode(get_option('wc_appointment_allowed_products')),
-            'current_product_id' => get_the_ID()
-        ));
-        wp_enqueue_style('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.css');
-        wp_enqueue_style('jquery-ui-css', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
+    public function enqueue_scripts()
+    {
+        if (is_product()) {
+            wp_enqueue_script('jquery-ui-datepicker');
+            wp_enqueue_script('jquery-ui-slider');
+            wp_enqueue_script('jquery-ui-slider-pips', plugin_dir_url(__FILE__) . 'jquery-ui-slider-pips.min.js', array('jquery', 'jquery-ui-slider'));
+            wp_enqueue_script('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.js', array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider', 'jquery-ui-slider-pips'));
+            wp_localize_script('wc-date-time-picker', 'wcDateTimePickerData', array(
+                'available_dates' => get_option('wc_appointment_date_picker_dates'),
+                'available_time_slots' => get_option('wc_appointment_time_slots'),
+                'allowed_products' => json_encode(get_option('wc_appointment_allowed_products')),
+                'current_product_id' => get_the_ID()
+            ));
+            wp_enqueue_style('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.css');
+            wp_enqueue_style('jquery-ui-css', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
+        }
     }
-}
-
-
 public function conditionally_add_validation_filter() {
     global $post;
     if (is_product()) {
