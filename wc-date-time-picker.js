@@ -39,7 +39,7 @@ if (allowed_products.includes(current_product_id)) {
       var date = $dateTimePicker.find(".wc-date-picker").val();
       var time = $dateTimePicker.find(".wc-time-picker-display").text();
 
-      if (!date.trim() || !time.trim()) {
+      if (!date || time === "00:00") {
         e.preventDefault();
         alert("Please select a date and time before adding to the cart.");
         return false;
