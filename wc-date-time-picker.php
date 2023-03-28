@@ -88,6 +88,10 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
             $allowed_products = !empty($allowed_products) ? $allowed_products : array();
     
             if ($product && in_array($current_product_id, $allowed_products)) {
+                wp_enqueue_style('wc-date-time-picker-modern', plugins_url('modern.css', __FILE__));
+                wp_enqueue_style('jquery-ui-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css');
+                wp_enqueue_script('jquery-ui-datepicker');
+                wp_enqueue_script('wc-date-time-picker', plugins_url('wc-date-time-picker.js', __FILE__), array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'));
                 wp_localize_script('wc-date-time-picker', 'wc_date_time_picker_vars', array(
                     'ajax_url' => admin_url('admin-ajax.php'),
                     'product_id' => $current_product_id,
