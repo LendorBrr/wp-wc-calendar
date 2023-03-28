@@ -60,8 +60,7 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_filter( 'woocommerce_get_settings_products', array( $this, 'get_settings' ), 10, 2 );
     }
 
-    public function enqueue_scripts()
-    {
+    public function enqueue_scripts() {
         if (is_product()) {
             wp_enqueue_script('jquery-ui-datepicker');
             wp_enqueue_script('jquery-ui-slider');
@@ -77,27 +76,27 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
             wp_enqueue_style('jquery-ui-css', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
         }
     }
-public function conditionally_add_validation_filter() {
-    global $post;
-    if (is_product()) {
-        $current_product_id = get_the_ID();
-        $product = wc_get_product($current_product_id);
-
-        $allowed_products = get_option('wc_datetimepicker_products');
-        $allowed_products = !empty($allowed_products) ? $allowed_products : array();
-
-        if ($product && in_array($current_product_id, $allowed_products)) {
-            wp_enqueue_style('jquery-ui');
-            wp_enqueue_style('wc-date-time-picker-modern');
-            wp_enqueue_script('wc-date-time-picker');
-            wp_localize_script('wc-date-time-picker', 'wc_date_time_picker_vars', array(
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'product_id' => $current_product_id,
-                'allowed_products' => $allowed_products,
-            ));
+    
+    
+    public function conditionally_add_validation_filter() {
+        global $post;
+        if (is_product()) {
+            $current_product_id = get_the_ID();
+            $product = wc_get_product($current_product_id);
+    
+            $allowed_products = get_option('wc_datetimepicker_products');
+            $allowed_products = !empty($allowed_products) ? $allowed_products : array();
+    
+            if ($product && in_array($current_product_id, $allowed_products)) {
+                wp_localize_script('wc-date-time-picker', 'wc_date_time_picker_vars', array(
+                    'ajax_url' => admin_url('admin-ajax.php'),
+                    'product_id' => $current_product_id,
+                    'allowed_products' => $allowed_products,
+                ));
+            }
         }
     }
-}
+    
 
 
     // Create a new WooCommerce section under Products tab
