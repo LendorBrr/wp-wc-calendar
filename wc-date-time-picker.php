@@ -81,8 +81,17 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
     public function load_latest_jquery_ui() {
         global $wp_scripts;
         $jquery_ui_version = $wp_scripts->registered['jquery-ui-core']->ver;
+    
+        // Enqueue the jQuery UI Datepicker library
         wp_enqueue_script('jquery-ui-datepicker', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_ui_version . '/jquery-ui.min.js', array('jquery'), $jquery_ui_version);
+    
+        // Enqueue the jQuery UI Slider library
+        wp_enqueue_script('jquery-ui-slider', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_ui_version . '/jquery-ui.min.js', array('jquery', 'jquery-ui-datepicker'), $jquery_ui_version);
+    
+        // Enqueue the jQuery UI CSS
+        wp_enqueue_style('jquery-ui', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_ui_version . '/themes/smoothness/jquery-ui.css', array(), $jquery_ui_version);
     }
+    
     
     
     
