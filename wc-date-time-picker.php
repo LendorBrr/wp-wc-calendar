@@ -62,7 +62,7 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 
     public function enqueue_scripts() {
         if (is_product()) {
-            wp_enqueue_script('jquery-ui-datepicker');
+            wp_enqueue_script('jquery-ui-datepicker', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', array('jquery'), '1.12.1');
             wp_enqueue_script('jquery-ui-slider');
             wp_enqueue_script('jquery-ui-slider-pips', plugin_dir_url(__FILE__) . 'jquery-ui-slider-pips.min.js', array('jquery', 'jquery-ui-slider'));
             wp_enqueue_script('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.js', array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider', 'jquery-ui-slider-pips'));
@@ -73,7 +73,7 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
                 'current_product_id' => get_the_ID()
             ));
             wp_enqueue_style('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.css');
-            wp_enqueue_style('jquery-ui-css', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
+            wp_enqueue_style('jquery-ui-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css');
         }
     }
     
@@ -89,8 +89,8 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
     
             if ($product && in_array($current_product_id, $allowed_products)) {
                 wp_enqueue_style('wc-date-time-picker-modern', plugins_url('modern.css', __FILE__));
-                wp_enqueue_style('jquery-ui-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css');
-                wp_enqueue_script('jquery-ui-datepicker');
+                wp_enqueue_style('jquery-ui-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css');
+                wp_enqueue_script('jquery-ui-datepicker', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', array('jquery'), '1.12.1');
                 wp_enqueue_script('wc-date-time-picker', plugins_url('wc-date-time-picker.js', __FILE__), array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'));
                 wp_localize_script('wc-date-time-picker', 'wc_date_time_picker_vars', array(
                     'ajax_url' => admin_url('admin-ajax.php'),
