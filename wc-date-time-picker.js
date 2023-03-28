@@ -15,22 +15,32 @@ if (allowed_products.includes(current_product_id)) {
       minDate: 0
     });
 
-    // Initialize timepicker
-    $dateTimePicker.find(".wc-time-picker").slider({
-      range: "min",
-      min: 0,
-      max: 1440,
-      step: 15,
-      slide: function(event, ui) {
-        var minutes = ui.value % 60;
-        var hours = (ui.value - minutes) / 60;
-        $dateTimePicker.find(".wc-time-picker-display").text(("0" + hours).slice(-2) + ":" + ("0" + minutes).slice(-2));
-      }
-    });
+// Initialize datepicker
+$dateTimePicker.find(".wc-date-picker").datepicker({
+  dateFormat: "yy-mm-dd",
+  minDate: 0
+});
 
-    // Set default time value
-    $dateTimePicker.find(".wc-time-picker-display").text("00:00");
-  });
+// Initialize timepicker
+$dateTimePicker.find(".wc-time-picker").slider({
+  range: "min",
+  min: 0,
+  max: 1440,
+  step: 15,
+  slide: function(event, ui) {
+      var minutes = ui.value % 60;
+      var hours = (ui.value - minutes) / 60;
+      $dateTimePicker.find(".wc-time-picker-display").text(("0" + hours).slice(-2) + ":" + ("0" + minutes).slice(-2));
+  }
+});
+
+// Set default time value
+$dateTimePicker.find(".wc-time-picker-display").text("00:00");
+
+
+// Set default time value
+$dateTimePicker.find(".wc-time-picker-display").text("00:00");
+
 
   $("form.cart").on("submit", function(e) {
     var $form = $(this);
