@@ -37,7 +37,7 @@ class WC_Date_Time_Picker {
      * Constructor.
      */
     public function __construct() {
-        add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_date_time_picker' ) );
+        add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_date_time_picker' ), 20 );
         add_action('wp_enqueue_scripts', array($this, 'load_latest_jquery_ui'));
         add_filter( 'woocommerce_get_sections_products', array( $this, 'add_product_settings_section' ) );
         add_filter( 'woocommerce_get_settings_products', array( $this, 'add_product_settings_fields' ), 10, 2 );
@@ -79,9 +79,13 @@ add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
     
         wp_enqueue_script('jquery-ui-datepicker');
         wp_enqueue_script('jquery-ui-slider');
-        
+    
         wp_register_script('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.js', array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'));
         wp_enqueue_script('wc-date-time-picker');
+        
+        wp_localize_script('wc-date-time-picker', 'wcDateTimePickerData', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+        ));
     }
     
 
@@ -190,9 +194,9 @@ public function taken_dates_times_page() {
         global $post;
     wp_enqueue_script('jquery-ui-datepicker');
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
-    wp_enqueue_script('jquery-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.3.2/jquery.timepicker.min.js', array( 'jquery' ), '1.3.3.2', true );
+    wp_enqueue_script('jquery-timepicker', 'https://cdn.jsdelivr.net/npm/jquery-ui-timepicker-addon@1.6.3/dist/jquery-ui-timepicker-addon.min.js', array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'), '1.6.3', true);
     wp_enqueue_style( 'jquery-timepicker', '//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.3/jquery.timepicker.min.css', array(), '1.3.3' );
-    wp_enqueue_script( 'wc-date-time-picker-script', plugin_dir_url( __FILE__ ) . 'assets/js/wc-date-time-picker.js', array( 'jquery', 'jquery-ui-datepicker', 'jquery-timepicker' ), '1.0', true );
+    wp_enqueue_script('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.js', array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'), '1.0', true);
 
  if (!is_product()) {
         return;
@@ -219,7 +223,7 @@ public function taken_dates_times_page() {
     add_action('woocommerce_before_add_to_cart_button', array($this, 'wc_before_add_to_cart_button'));
         $style = get_option( 'wc_date_time_picker_style', 'classic' );
         wp_enqueue_style( 'wc-date-time-picker-style', plugin_dir_url( __FILE__ ) . 'assets/css/' . $style . '.css', array(), '1.0' );
-        wp_enqueue_script( 'wc-date-time-picker-script', plugin_dir_url( __FILE__ ) . 'assets/js/wc-date-time-picker.js', array( 'jquery' ), '1.0', true );
+        wp_enqueue_script('wc-date-time-picker', plugin_dir_url(__FILE__) . 'wc-date-time-picker.js', array('jquery', 'jquery-ui-datepicker', 'jquery-ui-slider'), '1.0', true);
 
 $min_date = get_option( 'wc_date_time_picker_min_date', '0' );
     $min_time = get_option( 'wc_date_time_picker_min_time', '0' );
